@@ -1,7 +1,7 @@
 # zenhub_csv_gen
 
 ## 실행방법
-sh zenhub_issues.sh
+sudo sh zenhub_issues.sh
 
 ## 유의사항
 
