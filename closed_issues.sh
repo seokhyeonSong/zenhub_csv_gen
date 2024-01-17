@@ -69,7 +69,7 @@ while true; do
     response=$(curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -d "{\"query\":\"$QUERY\",\"variables\":{\"workspaceId\":\"$WORKSPACE_ID\",\"filters\":$FILTERS,\"after\":\"$after_cursor\"}}" $API_ENDPOINT)
 
     # Extracting titles and labels from the GraphQL response and appending to CSV
-    jq -r --arg repositoryName "$repositoryName" '.data.searchClosedIssues.edges[] |[$repositoryName, .node.title,.node.state,.node.labels.nodes[].name] | @csv' <<< "$response" >> closed_issues.csv
+    jq -r --arg repositoryName "$repositoryName" '.data.searchClosedIssues.edges[] |[$repositoryName, .node.title,.node.state,.node.labels.nodes[].name] | @csv' <<< "$response" > closed_issues.csv
 
     # Update the cursor for the next iteration
     after_cursor=$(jq -r '.data.searchClosedIssues.pageInfo.endCursor' <<< "$response")

@@ -70,5 +70,5 @@ if [ "$input" == "y" ]; then
 fi
 
 for pipeline in "${myPipelineIds[@]}"; do
-  ./other_pipeline_issues.sh $pipeline $repositoryGhId $repositoryName
+    ./other_pipeline_issues.sh $pipeline $repositoryGhId $repositoryName
 done

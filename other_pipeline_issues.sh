@@ -7,6 +7,8 @@ fi
 # Your GraphQL API endpoint
 API_ENDPOINT="https://api.zenhub.com/public/graphql"
 
+YAML_FILE="zenhub_api.yml"
+
 TOKEN=($(yq eval '.zenhub-token' "$YAML_FILE"))
 
 PIPELINE_ID=$1
@@ -56,7 +58,7 @@ while true; do
     response=$(curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -d "{\"query\":\"$QUERY\",\"variables\":{\"pipelineId\":\"$PIPELINE_ID\",\"filters\":$FILTERS}}" $API_ENDPOINT)
 
     # Extracting titles and labels from the GraphQL response and appending to CSV
-    jq -r --arg repositoryName $repositoryName '.data.searchIssuesByPipeline.edges[] | [$repositoryName, .node.title,.node.state,.node.labels.nodes[].name] | @csv' <<< "$response" >> $PIPELINE_ID.csv
+    jq -r --arg repositoryName $repositoryName '.data.searchIssuesByPipeline.edges[] | [$repositoryName, .node.title,.node.state,.node.labels.nodes[].name] | @csv' <<< "$response" > $PIPELINE_ID.csv
 
     # Update the cursor for the next iteration
     after_cursor=$(jq -r '.data.searchIssuesByPipeline.pageInfo.endCursor' <<< "$response")
