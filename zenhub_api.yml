@@ -1,0 +1,7 @@
+repos:
+  - GoodOnuii/seoltab
+  - GoodOnuii/ATDD-Projects
+github-token:
+  깃허브토큰을작성해주세요
+zenhub-token:
+  젠허브토큰을작성해주세요
